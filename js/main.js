@@ -4,21 +4,21 @@ var classicLayout = false;
 var portfolioKeyword;
 
 
-(function($) { "use strict"; 
-	
-	
+(function($) { "use strict";
+
+
 	/* DOCUMENT LOAD */
 	$(function() {
-		
-		
+
+
 		// ------------------------------
 		// start loader
 		showLoader();
 		// ------------------------------
-		
-		
+
+
 		// ------------------------------
-		// HOME TEXT TYPE EFFECT 
+		// HOME TEXT TYPE EFFECT
 		var typist;
 		typist = document.querySelector("#typist-element");
 		new Typist(typist, {
@@ -26,50 +26,50 @@ var portfolioKeyword;
 		  textInterval: 3000
 		});
 		// ------------------------------
-		
-		
-		
+
+
+
 		// ------------------------------
 		// HEADER FUNCTIONS
 		$('.search-toggle').on("click", function() {
             $('html').toggleClass('is-search-toggled-on');
 			$( ".search-box input" ).trigger( "focus" );
         });
-		
+
 		$('.menu-toggle').on("click", function() {
             $('html').toggleClass('is-menu-toggled-on');
         });
 		// ------------------------------
-		
-		
-		
+
+
+
 		// ------------------------------
 		// remove click delay on touch devices
 		FastClick.attach(document.body);
 		// ------------------------------
-		
-		
-					
+
+
+
 		// ------------------------------
 		// ONE PAGE LAYOUT FUNCTIONS
 		if($('html').hasClass('one-page-layout')) {
-			
+
 			// ------------------------------
 			// PORTFOLIO DETAILS
 			// if url contains a portfolio detail url
 			portfolioKeyword = $('section.portfolio').attr('id');
 			var detailUrl = giveDetailUrl();
 			// ------------------------------
-			
-			
+
+
 			// ------------------------------
 			// LAYOUT DETECT
 			classicLayout = $('html').attr('data-classic-layout') === 'true';
 			classicLayout = classicLayout || ($('html').attr('data-mobile-classic-layout') === 'true' && ($(window).width() < 1025));
 			classicLayout = classicLayout || !Modernizr.cssanimations;
-			
+
 			if(classicLayout) { // CLASSIC LAYOUT
-				$('html').addClass('classic-layout');	
+				$('html').addClass('classic-layout');
 				setActivePage();
 				$.address.change(function() {
 					setActivePage();
@@ -79,12 +79,12 @@ var portfolioKeyword;
 				$('html').addClass('modern-layout');
 				$.address.change(function() {
 					setActivePage();
-					$('html').removeClass('is-menu-toggled-on');	
+					$('html').removeClass('is-menu-toggled-on');
 					});
 			}
-			
-			
-			// FULL BROWSER BACK BUTTON SUPPORT 
+
+
+			// FULL BROWSER BACK BUTTON SUPPORT
 			$.address.change(function() {
 					var detailUrl = giveDetailUrl();
 					if(detailUrl != -1 ) {
@@ -94,45 +94,45 @@ var portfolioKeyword;
 							hideProjectDetails(true,false);
 						}
 					}
-				}); 
+				});
 		}
-		// ------------------------------	
-		
-		
-		
-		
+		// ------------------------------
+
+
+
+
 		// ------------------------------
 		// SETUP
 		setup();
 		// ------------------------------
-		
-		
-		
+
+
+
 		// ------------------------------
 		// PORTFOLIO DETAILS
 		// Show details
 		$(".one-page-layout a.ajax").live('click',function() {
-			
+
 			var returnVal;
 			var url = $(this).attr('href');
 			var baseUrl = $.address.baseURL();
-			
+
 			if(url.indexOf(baseUrl) != -1) { // full url
 				var total = url.length;
-				detailUrl = url.slice(baseUrl.length+1, total);	
+				detailUrl = url.slice(baseUrl.length+1, total);
 			} else { // relative url
 				detailUrl = url;
 			}
-			
+
 			$.address.path(portfolioKeyword + '/' + detailUrl );
-			
+
 			return false;
-			
+
 		});
 		// ------------------------------
-		
-		
-		
+
+
+
 		// ------------------------------
 		// FORM VALIDATION
 		// comment form validation fix
@@ -145,7 +145,7 @@ var portfolioKeyword;
 				$(this).addClass('email');
 			}
 		});
-		
+
 		// validate form
 		if($('.validate-form').length) {
 			$('.validate-form').each(function() {
@@ -153,16 +153,16 @@ var portfolioKeyword;
 				});
 		}
 		// ------------------------------
-		
-		
+
+
 		// ------------------------------
 		// FILL SKILL BARS
 		fillBars();
 		// ------------------------------
-		
-		
-	
-		
+
+
+
+
 		// ------------------------------
 		// GOOGLE MAP
 		/*
@@ -172,48 +172,48 @@ var portfolioKeyword;
 		*/
 		// When the window has finished loading create our google map below
 		google.maps.event.addDomListener(window, 'load', initializeMap);
-	
+
 		function initializeMap() {
-			
+
 			var mapCanvas = $('#map-canvas');
-			
+
 			if(mapCanvas.length) {
 				var latitude = mapCanvas.data("latitude");
 				var longitude = mapCanvas.data("longitude");
 				var zoom = mapCanvas.data("zoom");
 				var marker_image = mapCanvas.data("marker-image");
-				
+
 				// Basic options for a simple Google Map
 				// For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
 				var mapOptions = {
-					
+
 					// How zoomed in you want the map to start at (always required)
 					zoom: zoom,
-					
+
 					// disable zoom controls
 					disableDefaultUI: true,
-	
+
 					// The latitude and longitude to center the map (always required)
 					center: new google.maps.LatLng(latitude,longitude),
-	
-					// How you would like to style the map. 
+
+					// How you would like to style the map.
 					// This is where you would paste any style found on Snazzy Maps.
 					styles: [{"featureType":"administrative.locality","elementType":"all","stylers":[{"hue":"#2c2e33"},{"saturation":7},{"lightness":19},{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":-100},{"lightness":100},{"visibility":"simplified"}]},{"featureType":"poi","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":-100},{"lightness":100},{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#bbc0c4"},{"saturation":-93},{"lightness":31},{"visibility":"simplified"}]},{"featureType":"road","elementType":"labels","stylers":[{"hue":"#bbc0c4"},{"saturation":-93},{"lightness":31},{"visibility":"on"}]},{"featureType":"road.arterial","elementType":"labels","stylers":[{"hue":"#bbc0c4"},{"saturation":-93},{"lightness":-2},{"visibility":"simplified"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"hue":"#e9ebed"},{"saturation":-90},{"lightness":-8},{"visibility":"simplified"}]},{"featureType":"transit","elementType":"all","stylers":[{"hue":"#e9ebed"},{"saturation":10},{"lightness":69},{"visibility":"on"}]},{"featureType":"water","elementType":"all","stylers":[{"hue":"#e9ebed"},{"saturation":-78},{"lightness":67},{"visibility":"simplified"}]}]
 				};
-	
-				// Get the HTML DOM element that will contain your map 
+
+				// Get the HTML DOM element that will contain your map
 				// We are using a div with id="map" seen below in the <body>
 				var mapElement = document.getElementById('map-canvas');
 				//var mapElement = $('#map-canvas');
 				//var myLatlng = new google.maps.LatLng(mapElement.data("latitude"),mapElement.data("longitude"));
-				
+
 				// Create the Google Map using our element and options defined above
 				var map = new google.maps.Map(mapElement, mapOptions);
-	
+
 				//CREATE A CUSTOM PIN ICON
 				var marker_image = marker_image;
-				var pinIcon = new google.maps.MarkerImage(marker_image,null,null, null,new google.maps.Size(120, 90));    
-			
+				var pinIcon = new google.maps.MarkerImage(marker_image,null,null, null,new google.maps.Size(120, 90));
+
 				var marker = new google.maps.Marker({
 				   position: new google.maps.LatLng(latitude,longitude),
 				  map: map,
@@ -223,16 +223,16 @@ var portfolioKeyword;
 			}
 		}
 		// ------------------------------
-				
-		
-		
-		
+
+
+
+
 		// ------------------------------
-		/* jQuery Ajax Mail Send Script */	
+		/* jQuery Ajax Mail Send Script */
 		var contactForm = $( '#contact-form' );
 		var $alert = $('.site-alert');
 		var $submit = contactForm.find('.submit');
-		
+
 		contactForm.submit(function()
 		{
 			if (contactForm.valid())
@@ -240,7 +240,7 @@ var portfolioKeyword;
 				NProgress.start();
 				$submit.addClass("active loading");
 				var formValues = contactForm.serialize();
-				
+
 				$.post(contactForm.attr('action'), formValues, function(data)
 				{
 					if ( data == 'success' ) {
@@ -271,9 +271,9 @@ var portfolioKeyword;
 		  });
 		};
 		// ------------------------------
-        
-        
-        
+
+
+
 		// ------------------------------
 		/* SOCIAL FEED WIDGET */
 		var socialFeed = $('.social-feed');
@@ -284,50 +284,50 @@ var portfolioKeyword;
 					limit: $(this).data("limit"),
 					username: $(this).data("username")
 				})
-			});	
+			});
 		}
 		// ------------------------------
-		
 
-		
+
+
 	});
 	// DOCUMENT READY
-	
 
 
-	
+
+
 	// WINDOW ONLOAD
 	window.onload = function() {
-		
+
 		hideLoader();
-	
+
 	};
-	// WINDOW ONLOAD	
-	
-	
-	
-	 
-	
+	// WINDOW ONLOAD
+
+
+
+
+
 	// ------------------------------
 	// ------------------------------
 		// FUNCTIONS
 	// ------------------------------
 	// ------------------------------
-	
-	
+
+
 	// ------------------------------
 	// SETUP : plugins
 	function setup() {
-		
+
 		// MASONRY
 		setupMasonry();
-		
+
 		// ------------------------------
 		// LIGHTBOX
 		setupLightbox();
 		// ------------------------------
 
-		
+
 		// ------------------------------
 		// TABS
 		$('.tabs').each(function() {
@@ -335,10 +335,10 @@ var portfolioKeyword;
 				$(this).find('.tab-titles li:first-child a').addClass('active');
 				$(this).find('.tab-content > div:first-child').show();
 			} else {
-				$(this).find('.tab-content > div').eq($(this).find('.tab-titles li a.active').parent().index()).show();	
+				$(this).find('.tab-content > div').eq($(this).find('.tab-titles li a.active').parent().index()).show();
 			}
 		});
-		
+
 		$('.tabs .tab-titles li a').on("click", function() {
 			if($(this).hasClass('active')) { return; }
 			$(this).parent().siblings().find('a').removeClass('active');
@@ -347,44 +347,44 @@ var portfolioKeyword;
 			return false;
 		});
 		// ------------------------------
-		
-		
+
+
 		// ------------------------------
 		// TOGGLES
 		var toggleSpeed = 300;
 		$('.toggle h4.active + .toggle-content').show();
-	
+
 		$('.toggle h4').on("click", function() {
-			if($(this).hasClass('active')) { 
+			if($(this).hasClass('active')) {
 				$(this).removeClass('active');
 				$(this).next('.toggle-content').stop(true,true).slideUp(toggleSpeed);
 			} else {
-				
+
 				$(this).addClass('active');
 				$(this).next('.toggle-content').stop(true,true).slideDown(toggleSpeed);
-				
+
 				//accordion
 				if($(this).parents('.toggle-group').hasClass('accordion')) {
 					$(this).parent().siblings().find('h4').removeClass('active');
 					$(this).parent().siblings().find('.toggle-content').stop(true,true).slideUp(toggleSpeed);
 				}
-				
+
 			}
 			return false;
 		});
 		// ------------------------------
-		
-		
-		
+
+
+
 		// ------------------------------
 		// RESPONSIVE VIDEOS
 		if($('iframe,video').length) {
 			$("html").fitVids();
 		}
 		// ------------------------------
-		
-		
-		
+
+
+
 		// ------------------------------
 		// UNIFORM
 		$("select:not([multiple]), input:checkbox, input:radio, input:file").uniform();
@@ -394,23 +394,23 @@ var portfolioKeyword;
 			$('html').addClass('android');
 		}
 		// ------------------------------
-		
+
 
 	}
 	// setup()
 	// ------------------------------
-		
 
-		
-		
+
+
+
 	// ------------------------------
 	// MASONRY - ISOTOPE
 	function setupMasonry() {
-		
+
 		var masonry = $('.masonry, .gallery');
 		if (masonry.length) {
 			masonry.each(function(index, el) {
-				
+
 				// call isotope
 				refreshMasonry();
 				$(el).imagesLoaded(function() {
@@ -420,7 +420,7 @@ var portfolioKeyword;
 					// set columns
 					refreshMasonry();
 				});
-				
+
 				if (!$(el).data('isotope')) {
 					// filters
 					var filters = $(el).siblings('.filters');
@@ -433,60 +433,60 @@ var portfolioKeyword;
 							});
 						}
 				}
-				
+
 			}); //each
 		}
-	}			
+	}
 	$(window).on('resize debouncedresize', function() {
     	refreshMasonry();
 	});
 	// ------------------------------
-		
+
 	// ------------------------------
 	// REFRSH MASONRY - ISOTOPE
 	function refreshMasonry() {
-		
+
 		var masonry = $('.masonry');
 		if (masonry.length) {
 			masonry.each(function(index, el) {
-				
+
 				// check if isotope initialized
 				if ($(el).data('isotope')) {
-					
+
 					var itemW = $(el).data('item-width');
 					var containerW = $(el).width();
 					var items = $(el).children('.hentry');
 					var columns = Math.round(containerW/itemW);
-				
+
 					// set the widths (%) for each of item
 					items.each(function(index, element) {
 						var multiplier = $(this).hasClass('x2') && columns > 1 ? 2 : 1;
 						var itemRealWidth = (Math.floor( containerW / columns ) * 100 / containerW) * multiplier ;
 						$(this).css( 'width', itemRealWidth + '%' );
 					});
-				
+
 					var columnWidth = Math.floor( containerW / columns );
-					
+
 					$(el).isotope( 'option', { masonry: { columnWidth: columnWidth } } );
 					$(el).isotope('layout');
 					}
-				
+
 			}); //each
 		}
-	}	
+	}
 	// ------------------------------
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	// ------------------------------
 	// LIGHTBOX - applied to porfolio and gallery post format
-	function setupLightbox() {	
-		
+	function setupLightbox() {
+
 		if($(".lightbox, .gallery").length) {
-			
+
 			$('.media-box, .gallery').each(function(index, element) {
 				var $media_box = $(this);
 				$media_box.magnificPopup({
@@ -501,8 +501,8 @@ var portfolioKeyword;
 								'<div class="mfp-title"></div>'+
 								'<div class="mfp-counter"></div>'+
 							  '</div>', // Popup HTML markup. `.mfp-img` div will be replaced with img tag, `.mfp-close` by close button
-					
-					  cursor: 'mfp-zoom-out-cur', // Class that adds zoom cursor, will be added to body. Set to null to disable zoom out cursor. 
+
+					  cursor: 'mfp-zoom-out-cur', // Class that adds zoom cursor, will be added to body. Set to null to disable zoom out cursor.
 					  verticalFit: true, // Fits image in area vertically
 					  tError: '<a href="%url%">The image</a> could not be loaded.' // Error message
 					},
@@ -524,7 +524,7 @@ var portfolioKeyword;
 					markupParse: function(template, values, item) {
 						  var title = "";
 						  if(item.el.parents('.gallery-item').length) {
-							  title = item.el.parents('.gallery-item').find('.gallery-caption').text();	  
+							  title = item.el.parents('.gallery-item').find('.gallery-caption').text();
 						  } else {
 							  title = item.el.attr('title') == undefined ? "" : item.el.attr('title');
 							  }
@@ -553,12 +553,12 @@ var portfolioKeyword;
 				  closeOnContentClick: true,
 				  midClick: true
 				});
-			});	
+			});
 		}
 	}
 	// ------------------------------
-	
-	
+
+
 	// ------------------------------
 	// FILL PROGRESS BARS
 	function fillBars() {
@@ -567,101 +567,101 @@ var portfolioKeyword;
 			 var percent = bar.attr('data-percent');
 			 bar.find('.progress').css('width', percent + '%' ).html('<span>'+percent+'</span>');
 			});
-	}	
-	// ------------------------------	
+	}
+	// ------------------------------
 
 
-	
-	
+
+
 	// ------------------------------
 	// AJAX PORTFOLIO DETAILS
 	var pActive;
-	
+
 	function showProjectDetails(url) {
-		
+
 		showLoader();
-		
+
 		var p = $('.p-overlay:not(.active)').first();
 		pActive = $('.p-overlay.active');
-		
+
 		// ajax : fill data
-		p.empty().load(url + ' .portfolio-single', function() {	
+		p.empty().load(url + ' .portfolio-single', function() {
 			NProgress.set(0.5);
-			
+
 			// wait for images to be loaded
 			p.imagesLoaded(function() {
-				
+
 				// for galleries in ajax pulled content
 				setupMasonry();
-				
+
 				if(pActive.length) {
-					hideProjectDetails();	  
+					hideProjectDetails();
 				}
-				
+
 				hideLoader();
-				
+
 				$('html').addClass('p-overlay-on');
-				
+
 				$("body").scrollTop(0);
-								
+
 				// setup plugins
 				setup();
 
 				if(classicLayout) {
-					p.show();	
+					p.show();
 				} else {
-					p.removeClass('animate-in animate-out').addClass('animate-in').show();		
+					p.removeClass('animate-in animate-out').addClass('animate-in').show();
 				}
-				
+
 				p.addClass('active');
-				
+
 			});
 		});
 	}
-	
+
 	function hideProjectDetails(forever, safeClose) {
-		
+
 		$("body").scrollTop(0);
-		
+
 		// close completely by back link.
 		if(forever) {
 			pActive = $('.p-overlay.active');
-			
+
 			$('html').removeClass('p-overlay-on');
-			
+
 			if(!safeClose) {
 				// remove detail url
 				$.address.path(portfolioKeyword);
 			}
 		}
-		
+
 		pActive.removeClass('active');
-		
+
 		if(classicLayout) {
-			pActive.hide().empty();	
+			pActive.hide().empty();
 		} else {
-			pActive.removeClass('animate-in animate-out').addClass('animate-out').show();	
-			setTimeout(function() { pActive.hide().removeClass('animate-out').empty(); } ,10)	
+			pActive.removeClass('animate-in animate-out').addClass('animate-out').show();
+			setTimeout(function() { pActive.hide().removeClass('animate-out').empty(); } ,10)
 		}
 	}
-	
+
 	function giveDetailUrl() {
-	
+
 		var address = $.address.value();
 		var detailUrl;
-		
+
 		if (address.indexOf("/"+ portfolioKeyword + "/")!=-1 && address.length > portfolioKeyword.length + 2 ) {
 			var total = address.length;
 			detailUrl = address.slice(portfolioKeyword.length+2,total);
 		} else {
-			detailUrl = -1;	
+			detailUrl = -1;
 		}
 		return detailUrl;
 	}
 	// ------------------------------
-	
-	
-	
+
+
+
 	// ------------------------------
 	// AJAX LOADER
 	function showLoader() {
@@ -671,43 +671,43 @@ var portfolioKeyword;
 		NProgress.done();
 	}
 	// ------------------------------
-	
-	
-	
-	
-	
+
+
+
+
+
 	// ------------------------------
 	// CHANGE PAGE
 	function setActivePage() {
-		
+
 		var path = $.address.path();
 		path = path.slice(1, path.length);
 		path = giveDetailUrl() != -1 ? portfolioKeyword : path;
-		
-		
+
+
 		if(path == "") {  // if hash tag doesnt exists - go to first page
 			var firstPage = $('.nav-menu li').first().find('a').attr('href');
 			path = firstPage.slice(2,firstPage.length);
-			
-			
+
+
 			if(classicLayout) {
-				$('#'+ path).addClass( 'page-current' ).siblings().removeClass( 'page-current' );	
+				$('#'+ path).addClass( 'page-current' ).siblings().removeClass( 'page-current' );
 			} else {
-				$('#'+ path).addClass( 'page-current' );	
+				$('#'+ path).addClass( 'page-current' );
 			}
-			
+
 			setCurrentMenuItem();
 
 			//$.address.path(path);
 			return false;
 			}
 		else { // show page change animation
-				
+
 				// change page only if url doesn't target portfolio single page
 				if(giveDetailUrl() == -1){
-					
+
 					if(classicLayout) {
-						$('#'+ path).addClass( 'page-current' ).siblings().removeClass( 'page-current' );	
+						$('#'+ path).addClass( 'page-current' ).siblings().removeClass( 'page-current' );
 						setCurrentMenuItem();
 					} else {
 						if(!($('.page-current').length)) { // first load - don't animate page change
@@ -715,44 +715,44 @@ var portfolioKeyword;
 							current = $('#'+ path).index();
 							setCurrentMenuItem();
 						} else { // animate page change
-							
+
 								//console.log(giveDetailUrl());
 								PageTransitions.nextPage( $('#'+ path).index() );
-							
-						}	
+
+						}
 					}
-						
+
 				}
-				
-				
+
+
 		}
 
 		/*if(path.indexOf(portfolioKeyword) != -1) {
 		} */
-		
+
 		// refresh masonry layouts
 		refreshMasonry();
 		setTimeout(function() { refreshMasonry(); }, 100);
-		
-	}	
+
+	}
 	// ------------------------------
-	
-	
-	
+
+
+
 	// ------------------------------
 	// SET CURRENT MENU ITEM
 	function setCurrentMenuItem() {
 		var activePageId = $('.pt-page.page-current').attr('id');
 		// set default nav menu
 		$('.nav-menu a[href$=' + activePageId +']').parent().addClass('current_page_item').siblings().removeClass('current_page_item');
-	}	
+	}
 	// ------------------------------
-	
-	
-	
+
+
+
 	// ------------------------------
 	// PAGE TRANSITIONS : modern layout
-	var current = 0;
+	var current = 22;
 	var inClass, outClass;
 	window.nextAnimation = $('html').data("next-animation");
 	window.prevAnimation = $('html').data("prev-animation");
@@ -776,64 +776,64 @@ var portfolioKeyword;
 			animEndEventName = animEndEventNames[ Modernizr.prefixed( 'animation' ) ],
 			// support css animations
 			support = Modernizr.cssanimations;
-		
-		
+
+
 		// init()
 		function init() {
-	
+
 			//$pages.each( function() {
 				//var $page = $( this );
 				//$page.attr('data-org-class-list', $page.attr( 'class' ) );
 			//} );
-			
-				
+
+
 		}
 		// end init()
-			
-		
+
+
 		// don't change hasg tag if isAnimating
 		$menuLinks.on("click", function() {
 
 			if( isAnimating ) {
-				
+
 				return false;
 			}
 		});
-		
+
 		// PAGE CHANGE FN
 		function nextPage(nextPageIndex) {
-			
+
 			// DO NOTHING : if nextPage is same with the current page
 			if(nextPageIndex === current) {
-				return; 
+				return;
 				}
-			
+
 			var animation = nextPageIndex > current ? nextAnimation : prevAnimation;
-			
+
 			// random animation
 			if(randomize) {
 				if( animcursor > 67 ) {
 					animcursor = 1;
 				}
 				animation = animcursor;
-				++animcursor;	
+				++animcursor;
 			}
-			
+
 			if( isAnimating ) {
 				return false;
 			}
-	
+
 			isAnimating = true;
-			
+
 			var $currPage = $pages.eq( current );
-			
-			current = nextPageIndex; 
+
+			current = nextPageIndex;
 
 			var $nextPage = $pages.eq( current ).addClass( 'page-current' );
-				
-	
+
+
 			switch( animation ) {
-	
+
 				case 1:
 					outClass = 'pt-page-moveToLeft';
 					inClass = 'pt-page-moveFromRight';
@@ -1102,9 +1102,9 @@ var portfolioKeyword;
 					outClass = 'pt-page-rotateSlideOut';
 					inClass = 'pt-page-rotateSlideIn';
 					break;
-	
+
 			}
-	
+
 			$currPage.addClass( outClass ).on( animEndEventName, function() {
 				$currPage.off( animEndEventName );
 				endCurrPage = true;
@@ -1112,7 +1112,7 @@ var portfolioKeyword;
 					onEndAnimation( $currPage, $nextPage );
 				}
 			} );
-	
+
 			$nextPage.addClass( inClass ).on( animEndEventName, function() {
 				$nextPage.off( animEndEventName );
 				endNextPage = true;
@@ -1120,13 +1120,13 @@ var portfolioKeyword;
 					onEndAnimation( $currPage, $nextPage );
 				}
 			} );
-	
+
 			if( !support ) {
 				onEndAnimation( $currPage, $nextPage );
 			}
-	
+
 		}
-	
+
 		function onEndAnimation( $outpage, $inpage ) {
 			endCurrPage = false;
 			endNextPage = false;
@@ -1134,7 +1134,7 @@ var portfolioKeyword;
 			isAnimating = false;
 			setCurrentMenuItem();
 		}
-	
+
 		function resetPage( $outpage, $inpage ) {
 			//$outpage.attr( 'class', $outpage.attr( 'data-org-class-list' ) );
 			//$inpage.attr( 'class', $inpage.attr( 'data-org-class-list' ) + ' page-current' );
@@ -1143,22 +1143,22 @@ var portfolioKeyword;
 			console.log("inClass = " + inClass);
 			$pages.eq( current ).siblings().removeClass( 'page-current' );
 		}
-	
+
 		init();
-	
-		return { 
+
+		return {
 			init : init,
 			nextPage : nextPage
 		};
-	
+
 	})();
 	window.nextPage = function(index) {
 		return new PageTransitions.nextPage(index);
 		};
 	// ------------------------------
-	
-	
-	
+
+
+
 
 
 })(jQuery);

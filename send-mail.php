@@ -3,7 +3,7 @@
 	// site owner
 	$site_name = 'mduplinsky.me';
 	$sender_domain = 'matt@mduplinsky.me';
-	$to = 'matthew.duplinsky@gmail.com';
+	$to = 'matt@mduplinsky.me';
 	
 	// contact form fields
 	$name = trim( $_POST['name'] );
